@@ -24,8 +24,8 @@ RUN pip install --upgrade pip setuptools wheel && \
     pip install --extra-index-url https://download.pytorch.org/whl/cu121 \
         torch torchvision torchaudio
 
-# Create runtime dirs (configs exists even before first boot)
-RUN mkdir -p $WEBUI_DIR $DATA_DIR $WEBUI_DIR/configs
+# Only pre-create persistent data dir (leave /opt/webui for start.sh clone)
+RUN mkdir -p $DATA_DIR
 
 EXPOSE 7860
 
