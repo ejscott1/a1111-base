@@ -4,9 +4,10 @@ Minimal, extensions-free image that launches the latest AUTOMATIC1111 Stable Dif
 - Clones/updates A1111 at container start
 - Persists all data under `/workspace/a1111-data`
 - Auto-downloads `v1-inference.yaml` for SD 1.5
+- Supports installing extensions via the WebUI
 
 ## Image
-ghcr.io/<your-username>/<repo>:latest
+ghcr.io/ejscott1/a1111-base:latest
 
 > Make the package **Public** in GitHub → Package settings (or provide GHCR creds in RunPod if private).
 
@@ -20,14 +21,13 @@ ghcr.io/<your-username>/<repo>:latest
 - Configs (A1111): /opt/webui/configs/v1-inference.yaml
 
 ## Run (RunPod)
-- Image: ghcr.io/<you>/<repo>:latest
+- Image: ghcr.io/ejscott1/a1111-base:latest
 - GPU: A4500/A5000 (solid) or A40/4090 (faster)
 - Volume: mount persistent volume at /workspace
 - Port: expose 7860
-- Env (optional):
-  WEBUI_ARGS=--listen --port 7860 --api --data-dir /workspace/a1111-data
-
-Connect → HTTP once running.
+- Env (with extension installs enabled):
+  WEBUI_ARGS=--listen --port 7860 --api --data-dir /workspace/a1111-data --enable-insecure-extension-access
+- Connect → HTTP once running.
 
 ## First use
 1. Upload at least one model to:
@@ -42,7 +42,7 @@ Connect → HTTP once running.
 - WEBUI_DIR (default /opt/webui)
 - DATA_DIR (default /workspace/a1111-data)
 - PORT (default 7860)
-- WEBUI_ARGS (default --listen --port ${PORT} --api --data-dir ${DATA_DIR})
+- WEBUI_ARGS (default includes extension access)
 - WEBUI_COMMIT — pin A1111 to a specific commit SHA (optional)
 - SKIP_GIT_UPDATE=1 — skip pulling latest A1111 on boot
 
@@ -51,5 +51,5 @@ Ensure this file exists:
   .github/workflows/build.yml
 
 Push to main to auto-build & push tags:
-- ghcr.io/<you>/<repo>:latest
-- ghcr.io/<you>/<repo>:sha-<commit>
+- ghcr.io/ejscott1/a1111-base:latest
+- ghcr.io/ejscott1/a1111-base:sha-<commit>
