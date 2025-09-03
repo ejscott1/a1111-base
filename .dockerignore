@@ -1,0 +1,25 @@
+# Ignore git metadata
+.git
+.gitignore
+.gitattributes
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Local artifacts
+.DS_Store
+Thumbs.db
+
+# Common output / cache dirs (keep image small)
+outputs/
+cache/
+models/
+extensions/
+embeddings/
+configs/
