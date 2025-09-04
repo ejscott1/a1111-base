@@ -26,6 +26,14 @@ RUN pip install --upgrade pip setuptools wheel && \
     pip install --index-url https://download.pytorch.org/whl/cu121 \
         xformers
 
+# 🔧 Quiet + stability env
+ENV PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True,max_split_size_mb:128" \
+    HF_HUB_DISABLE_TELEMETRY=1 \
+    TOKENIZERS_PARALLELISM=false
+
+# (Optional) extras: face restore + upscale (uncomment if you want them baked in)
+# RUN pip install realesrgan gfpgan basicsr
+
 # Persistent data dir (A1111 cloned at runtime)
 RUN mkdir -p $DATA_DIR
 
