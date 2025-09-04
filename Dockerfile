@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.8.0-cudnn8-runtime-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
@@ -19,14 +19,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python3 -m venv $VENV_DIR
 ENV PATH="$VENV_DIR/bin:$PATH"
 
-# PyTorch (CUDA 12.8) + xFormers (matching cu128 wheels)
+# PyTorch (CUDA 12.1) + xFormers (cu121 wheels)
 RUN pip install --upgrade pip setuptools wheel && \
-    pip install --index-url https://download.pytorch.org/whl/cu128 \
+    pip install --index-url https://download.pytorch.org/whl/cu121 \
         torch torchvision torchaudio && \
-    pip install --index-url https://download.pytorch.org/whl/cu128 \
+    pip install --index-url https://download.pytorch.org/whl/cu121 \
         xformers
 
-# Pre-create persistent data dir (A1111 repo is cloned at runtime)
+# Persistent data dir (A1111 cloned at runtime)
 RUN mkdir -p $DATA_DIR
 
 # Healthcheck for A1111
