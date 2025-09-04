@@ -5,6 +5,7 @@ Minimal, extensions-free image that launches the latest AUTOMATIC1111 Stable Dif
 - Persists all data under `/workspace/a1111-data`
 - Auto-downloads `v1-inference.yaml` for SD 1.5
 - Supports installing extensions via the WebUI
+- Optimized with **xFormers** for faster / lower-VRAM attention
 
 ## Image
 ghcr.io/ejscott1/a1111-base:latest
@@ -25,8 +26,8 @@ ghcr.io/ejscott1/a1111-base:latest
 - GPU: A4500/A5000 (solid) or A40/4090 (faster)
 - Volume: mount persistent volume at /workspace
 - Port: expose 7860
-- Env (with extension installs enabled):
-  WEBUI_ARGS=--listen --port 7860 --api --data-dir /workspace/a1111-data --enable-insecure-extension-access
+- Env (with extension installs + xFormers enabled):
+  WEBUI_ARGS=--listen --port 7860 --api --data-dir /workspace/a1111-data --enable-insecure-extension-access --xformers
 - Connect → HTTP once running.
 
 ## First use
@@ -42,7 +43,7 @@ ghcr.io/ejscott1/a1111-base:latest
 - WEBUI_DIR (default /opt/webui)
 - DATA_DIR (default /workspace/a1111-data)
 - PORT (default 7860)
-- WEBUI_ARGS (default includes extension access)
+- WEBUI_ARGS (default includes extension access + xFormers)
 - WEBUI_COMMIT — pin A1111 to a specific commit SHA (optional)
 - SKIP_GIT_UPDATE=1 — skip pulling latest A1111 on boot
 
